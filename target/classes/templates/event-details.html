@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Detayı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1471967183320-ee018f6e114a?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            gap: 100px;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .container h2 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .event-info {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #34495e;
+        }
+
+        .event-info p {
+            margin: 10px 0;
+        }
+
+        .event-info span {
+            font-weight: bold;
+            color: #16a085;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+
+        .chat-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .chat-message {
+            font-size: 14px;
+            margin-bottom: 12px;
+            padding: 8px;
+            background-color: #e1f5fe;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .chat-message strong {
+            font-size: 16px;
+            color: #3498db;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 15px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px;
+            font-size: 14px;
+            color: #333;
+            background-color: #ffffff;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: #3498db;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+
+        .chat-input button {
+            padding: 12px 22px;
+            font-size: 16px;
+            color: #fff;
+            background: linear-gradient(145deg, #3498db, #2980b9);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: linear-gradient(145deg, #2980b9, #3498db);
+            transform: scale(1.05);
+        }
+
+        .chat-input button:active {
+            transform: scale(0.98);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #c0392b;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #e74c3c;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Etkinlik Bilgileri -->
+<div class="container">
+    <h2>Etkinlik Bilgileri</h2>
+    <div class="event-info">
+        <p><strong>Kategori:</strong> <span th:text="${etkinlik.kategori != null ? etkinlik.kategori : 'Kategori Bilgisi Yok'}">Kategori Bilgisi</span></p>
+        <p><strong>Konum:</strong> <span th:text="${etkinlik.konum != null ? etkinlik.konum : 'Konum Bilgisi Yok'}">Konum Bilgisi</span></p>
+        <p><strong>Tarih:</strong> <span th:text="${etkinlik.tarih != null ? etkinlik.tarih : 'Tarih Bilgisi Yok'}">Tarih Bilgisi</span></p>
+        <p><strong>Saat:</strong> <span th:text="${etkinlik.saat != null ? etkinlik.saat : 'Saat Bilgisi Yok'}">Saat Bilgisi</span></p>
+        <p><strong>Süre:</strong> <span th:text="${etkinlik.etkinlik_suresi != null ? etkinlik.etkinlik_suresi : 'Süre Bilgisi Yok'}">Süre Bilgisi</span></p>
+        <p><strong>Açıklama:</strong> <span th:text="${etkinlik.aciklama != null ? etkinlik.aciklama : 'Açıklama Yok'}">Açıklama</span></p>
+    </div>
+    <a href="/home" class="back-button">Geri Dön</a>
+</div>
+
+<!-- Harita -->
+<div class="container">
+    <h2>Konum</h2>
+    <div style="height:300px;width: 400px" id="map">
+    </div>
+</div>
+
+<!-- Mesajlaşma -->
+<div class="container">
+    <h2>Etkinlik Mesajlaşma</h2>
+    <div class="chat-container" id="chat-container">
+        <div class="chat-message"> <h3> yükleniyor...</h3>  </div>
+    </div>
+    <div>
+        <input type="hidden" name="etkinlikKonum" th:value="${etkinlik.konum}">
+        <input type="hidden" name="kullanıcıKonum" th:value="${kullanıcıKonum}">
+
+    </div>
+
+
+    <form th:action="@{/home/event/{id}(id=${etkinlik.id})}" method="post">
+        <input type="hidden" name="etkinlik_id" th:value="${etkinlik.id}" />
+        <div class="chat-input">
+            <input type="text" name="mesaj_metni" placeholder="Mesajınızı yazın" required />
+            <button type="submit">Gönder</button>
+        </div>
+    </form>
+</div>
+
+
+
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6K4rJ-zSozBZXCC0aVzmPdbwE3ppUj3Y&callback=initMap&libraries=places"
+        async
+        defer>
+
+</script>
+
+
+<script>
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 39.92077, lng: 32.85411 },
+            zoom: 7,
+        });
+
+        const directionsService = new google.maps.DirectionsService();
+        const directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
+
+        //başlangıç ve bitiş konumları
+        const startLocation = document.getElementsByName("kullanıcıKonum").item(0).value;
+        const endLocation = document.getElementsByName("etkinlikKonum").item(0).value;
+
+        directionsService.route(
+            {
+                origin: startLocation,
+                destination: endLocation,
+                travelMode: google.maps.TravelMode.DRIVING,
+            },
+            (response, status) => {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(response);
+                } else {
+                    console.error("Rota oluşturulamadı:", status);
+                }
+            }
+        );
+    }
+</script>
+
+
+<script>
+    window.onload = function () {
+        setInterval(loadMessages, 2000); // 2 saniyede bir mesajları günceller
+    }
+
+    async function loadMessages() {
+        const etkinlikId = document.getElementsByName("etkinlik_id").item(0).value;
+        var url = "/home/event/messages/" + etkinlikId;
+        var url1 = "/home/event/messages/user/";
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const chatContainer = document.getElementById("chat-container");
+            chatContainer.innerHTML = "";
+
+            if (Array.isArray(data)) {
+                const messagesWithUsernames = await Promise.all(data.map(async (message) => {
+                    const userResponse = await fetch(url1 + message.gondericiId);
+                    const userData = await userResponse.json();
+                    return {
+                        message: message,
+                        username: userData.kullanıcıAdı
+                    };
+                }));
+
+                messagesWithUsernames.forEach(({ message, username }) => {
+                    const messageElement = document.createElement("div");
+                    messageElement.className = "chat-message";
+                    messageElement.innerHTML = "<strong>" + username + ":</strong> " + message.mesaj_metni;
+                    chatContainer.appendChild(messageElement);
+                });
+
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            } else {
+                console.error("Expected an array, but got:", data);
+            }
+        } catch (error) {
+            console.error("Error fetching messages:", error);
+        }
+    }
+</script>
+
+</body>
+</html>

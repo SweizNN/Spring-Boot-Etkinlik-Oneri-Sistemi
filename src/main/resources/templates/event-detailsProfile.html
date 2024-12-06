@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etkinlik Detayı</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Arial Black', sans-serif;
+      background-image: url("https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .event-detail-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .event-detail-container img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    h2 {
+      font-size: 32px;
+      margin-top: 20px;
+      background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /
+    }
+
+    .event-info {
+      margin-top: 30px;
+      font-size: 18px;
+      line-height: 1.6;
+      background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .event-info p {
+      margin: 10px 0;
+    }
+
+    .event-info .category,
+    .event-info .location {
+      font-weight: bold;
+      color: #4CAF50;
+    }
+
+    .join-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 20px;
+    }
+
+    .join-button:hover {
+      background-color: #45a049;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      background: linear-gradient(90deg, #158100, #04b65b, #0296af, #00fff8, cyan, blue, violet);
+      -webkit-background-clip: text;
+      color: transparent;
+      border: 2px solid green;
+      padding: 12px 20px;
+      font-size: 16px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+      border-radius: 5px;
+      text-decoration: none;
+
+
+    }
+
+    .back-button:hover {
+      background-color: #ff3b3b;
+    }
+
+    .event-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .event-meta span {
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    .event-meta span strong {
+      color: #fff;
+    }
+
+  </style>
+
+  <script>
+    function openModal() {
+      document.getElementById('updateModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('updateModal').style.display = 'none';
+    }
+  </script>
+
+</head>
+<body>
+
+<div class="event-detail-container">
+
+  <div class="event-info">
+    <h2 th:text="${etkinlik.etkinlik_adı != null ? etkinlik.etkinlik_adı : 'Etkinlik Adı Bulunamadı'}"></h2>
+    <p><strong>Kategori:</strong> <span th:text="${etkinlik.kategori != null ? etkinlik.kategori : 'Kategori Bilgisi Yok'}"></span></p>
+    <p><strong>Konum:</strong> <span th:text="${etkinlik.konum != null ? etkinlik.konum : 'Konum Bilgisi Yok'}"></span></p>
+    <p><strong>Etkinlik Tarihi:</strong> <span th:text="${etkinlik.tarih != null ? etkinlik.tarih : 'Tarih Bilgisi Yok'}"></span></p>
+    <p><strong>Etkinlik Saati:</strong> <span th:text="${etkinlik.saat != null ? etkinlik.saat : 'Saat Bilgisi Yok'}"></span></p>
+    <p><strong>Etkinlik Süresi:</strong> <span th:text="${etkinlik.etkinlik_suresi != null ? etkinlik.etkinlik_suresi : 'Süre Bilgisi Yok'}"></span></p>
+    <p><strong>Açıklama:</strong> <span th:text="${etkinlik.aciklama != null ? etkinlik.aciklama : 'Açıklama Yok'}"></span></p>
+  </div>
+
+  <div class="event-meta">
+    <form th:action="@{/update-profile/event/delete/{id}(id=${etkinlik.id})}" method="post" style="margin-top: 20px;">
+      <button type="submit" class="join-button" style="background: linear-gradient(90deg, #158100, #04b65b, #0296af, #00fff8, cyan, blue, violet);
+      -webkit-background-clip: text;
+      color: transparent;
+      border: 2px solid green;
+      padding: 12px 20px;
+      font-size: 16px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);">Etkinliği Sil</button>
+    </form>
+    <button type="button" class="join-button" style="background: linear-gradient(90deg, #0fb6b2, #158100, #158100, #03cbb7, cyan, blue, violet);-webkit-background-clip: text;
+      color: transparent;
+      border: 2px solid green;
+      padding: 12px 20px;
+      font-size: 16px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); " onclick="openModal()">Etkinliği Güncelle</button>
+  </div>
+
+  <div id="updateModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); z-index: 1000;">
+    <form th:action="@{/update-profile/event/update/{id}(id=${etkinlik.id})}" method="post">
+      <h3>Etkinliği Güncelle</h3>
+      <label for="etkinlik_adı">Etkinlik Adı:</label><br>
+      <input type="text" id="etkinlik_adı" name="etkinlik_adı" th:value="${etkinlik.etkinlik_adı}" required><br><br>
+      <label for="kategori">Kategori:</label><br>
+      <input type="text" id="kategori" name="kategori" th:value="${etkinlik.kategori}" required><br><br>
+      <label for="konum">Konum:</label><br>
+      <input type="text" id="konum" name="konum" th:value="${etkinlik.konum}" required><br><br>
+      <label for="tarih">Tarih:</label><br>
+      <input type="date" id="tarih" name="tarih" th:value="${etkinlik.tarih}" required><br><br>
+      <label for="saat">Etkinlik Süresi:</label><br>
+      <input type="time" id="etkinlik_suresi" name="etkinlik_suresi" th:value="${etkinlik.etkinlik_suresi}" required><br><br>
+      <label for="saat">Saat:</label><br>
+      <input type="time" id="saat" name="saat" th:value="${etkinlik.saat}" required><br><br>
+      <label for="aciklama">Açıklama:</label><br>
+      <textarea id="aciklama" name="aciklama" rows="4" required th:text="${etkinlik.aciklama}"></textarea><br><br>
+      <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Güncelle</button>
+      <button type="button" onclick="closeModal()" style="background-color: #ff5c5c; color: white; padding: 10px 20px; border: none; border-radius: 5px;">İptal</button>
+    </form>
+  </div>
+
+  <br>
+  <a href="/update-profile" class="back-button">Geri Dön</a>
+</div>
+
+</body>
+</html>

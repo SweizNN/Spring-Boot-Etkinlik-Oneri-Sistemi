@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Güncelle</title>
+
+  <style>
+    body {
+      font-family: Arial Black, sans-serif;
+      background-image: url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/455120/80a8b1d46bc2434a53c634de9721205228bea966.jpg");
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+      margin-right: 100px;
+      max-width: 1600px;
+      padding: 10px;
+    }
+
+    .right-panel {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 25px;
+      width: 45%;
+    }
+    .event-list{
+      padding-right: 1150px ;
+
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    input, select, button {
+      margin-bottom: 15px;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+
+    input, select {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    button {
+      background-color: #80067a;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    a {
+      color: #a8e063;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: #ff4d4d;
+      margin-bottom: 10px;
+    }
+
+    .success {
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+
+    .event-list {
+      color: #fff;
+      text-align: left;
+      width: 100%;
+    }
+
+    .event-list h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .event-list ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .event-list li {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="event-list" th:if="${olusturulanEtkinlikler != null}">
+    <h2>Oluşturduğunuz Etkinlikler:</h2>
+    <ul>
+      <li th:each="etkinlik : ${olusturulanEtkinlikler}">
+        <a th:href="@{/update-profile/event/{id}(id=${etkinlik.id})}" th:text="${etkinlik.etkinlik_adı}"></a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="right-panel">
+    <h2>Güncelle</h2>
+    <div th:if="${error}" class="error">
+      <p th:text="${error}"></p>
+    </div>
+    <div th:if="${successMessage}" class="success">
+      <p th:text="${successMessage}"></p>
+    </div>
+
+    <form action="/home/update-profile" method="post">
+      <input type="text" name="kullanıcı_adı" placeholder="Kullanıcı Adı" required>
+      <input type="password" name="sifre" placeholder="Şifre" required>
+      <input type="text" name="ad" placeholder="Ad" required>
+      <input type="text" name="soyad" placeholder="Soyad" required>
+      <input type="email" name="eposta" placeholder="E-Posta" required>
+      <input type="text" name="telefon_numarası" placeholder="Telefon Numarası">
+      <input type="date" name="dogum_tarihi" placeholder="Doğum Tarihi">
+      <input type="text" name="ilgi_alanları" placeholder="İlgi Alanları">
+      <input type="text" name="konum" placeholder="Konum">
+      <label for="cinsiyet">Cinsiyet</label>
+      <select name="cinsiyet" id="cinsiyet">
+        <option value="Erkek">Erkek</option>
+        <option value="Kadın">Kadın</option>
+        <option value="Diğer">Diğer</option>
+      </select>
+      <input type="url" name="profil_fotografı" placeholder="Profil Fotoğrafı">
+
+      <button type="submit">Güncelle</button>
+    </form>
+
+    <a href="/home" class="back-button">Geri Dön</a>
+  </div>
+</div>
+
+</body>
+</html>

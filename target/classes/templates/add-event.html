@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="tr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Ekle</title>
+    <style>
+        body {
+            font-family: Arial Black, sans-serif;
+            background-image: url("https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/592660/08b604ae36bf422340ece2500abe06f74db32d21.jpg");
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.38);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #c90000;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        input, textarea, button {
+            margin-bottom: 15px;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        input[type="text"], input[type="date"], input[type="time"], textarea {
+            background: rgba(0, 0, 0, 0.7);
+            color: #a20202;
+        }
+
+        input::placeholder {
+            color: #a20202;
+            text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8);
+        }
+
+        button {
+            background-color: #a20202;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #420101;
+        }
+
+        a {
+            color: #a20202;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Yeni Etkinlik Ekle</h2>
+
+    <!-- Hata mesajı -->
+    <div class="error-message" th:if="${error}">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form action="/home/add-event" method="post">
+        <input type="text" name="etkinlikAdi" placeholder="Etkinlik Adı" required>
+        <textarea name="aciklama" placeholder="Etkinlik Açıklaması" required></textarea>
+        <input type="date" name="tarih" placeholder="Etkinlik Tarihi" required>
+        <input type="time" name="saat" placeholder="Etkinlik Saati" required>
+        <input type="time" name="etkinlik_suresi" placeholder="Etkinlik Süresi" required>
+        <input type="text" name="konum" placeholder="Etkinlik Konumu" required>
+        <input type="text" name="kategori" placeholder="Etkinlik Kategorisi" required>
+        <button type="submit">Etkinlik Ekle</button>
+    </form>
+
+    <a href="/home">Geri Dön</a>
+</div>
+
+</body>
+</html>

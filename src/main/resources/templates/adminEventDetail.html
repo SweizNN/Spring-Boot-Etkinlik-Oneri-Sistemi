@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etkinlik Detayları</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f7fc;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      padding: 30px;
+      max-width: 850px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    h1, h2 {
+      color: #34495e;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #606f7b;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .event-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .event-meta button, .event-meta form button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .event-meta button:hover, .event-meta form button:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    .event-meta form button.delete-btn {
+      background-color: #e74c3c;
+    }
+
+    .event-meta form button.delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    #updateModal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    #updateModal h3 {
+      font-size: 20px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    #updateModal label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+      color: #34495e;
+      font-size: 14px;
+    }
+
+    #updateModal input, #updateModal textarea {
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      color: #34495e;
+    }
+
+    #updateModal button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    #updateModal button.update-btn {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    #updateModal button.cancel-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .participants-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .participants-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+      color: #606f7b;
+    }
+
+    a {
+      color: #3498db;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    a:hover {
+      color: #2980b9;
+    }
+
+    /* Overlay effect */
+    #modalOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+  </style>
+
+  <script>
+    function openModal() {
+      document.getElementById('updateModal').style.display = 'block';
+      document.getElementById('modalOverlay').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('updateModal').style.display = 'none';
+      document.getElementById('modalOverlay').style.display = 'none';
+    }
+  </script>
+</head>
+<body>
+
+<div id="modalOverlay" onclick="closeModal()"></div>
+
+<div class="container">
+  <h1 th:text="${event.etkinlik_adı}"></h1>
+  <p><strong>Konum:</strong> <span th:text="${event.konum}"></span></p>
+  <p><strong>Tarih:</strong> <span th:text="${event.tarih}"></span></p>
+  <p><strong>Açıklama:</strong> <span th:text="${event.aciklama}"></span></p>
+  <p><strong>Etkinlik Süresi:</strong> <span th:text="${event.etkinlik_suresi}"></span></p>
+  <p><strong>Etkinlik Kategorisi:</strong> <span th:text="${event.kategori}"></span></p>
+  <p><strong>Saat:</strong> <span th:text="${event.saat}"></span></p>
+
+  <h2>Katılımcılar</h2>
+  <div class="participants-list">
+    <ul>
+      <li th:each="kullanıcı : ${kullanıcılar}">
+        <span th:text="${kullanıcı.kullanıcıAdı}"></span> - <span th:text="${kullanıcı.eposta}"></span>
+      </li>
+    </ul>
+  </div>
+
+
+
+  <div class="event-meta">
+    <form th:action="@{/admin/event/delete/{id}(id=${event.id})}" method="post">
+      <button type="submit" class="delete-btn">Etkinliği Sil</button>
+    </form>
+    <a href="/admin">Ana Sayfaya Dön</a>
+    <button type="button" onclick="openModal()">Etkinliği Güncelle</button>
+  </div>
+</div>
+
+<div id="updateModal">
+  <form th:action="@{/admin/event/update/{id}(id=${event.id})}" method="post">
+    <h3>Etkinliği Güncelle</h3>
+    <label for="etkinlik_adı">Etkinlik Adı:</label>
+    <input type="text" id="etkinlik_adı" name="etkinlik_adı" th:value="${event.etkinlik_adı}" required>
+
+    <label for="kategori">Kategori:</label>
+    <input type="text" id="kategori" name="kategori" th:value="${event.kategori}" required>
+
+    <label for="konum">Konum:</label>
+    <input type="text" id="konum" name="konum" th:value="${event.konum}" required>
+
+    <label for="tarih">Tarih:</label>
+    <input type="date" id="tarih" name="tarih" th:value="${event.tarih}" required>
+
+    <label for="saat">Saat:</label>
+    <input type="time" id="saat" name="saat" th:value="${event.saat}" required>
+
+    <label for="etkinlik_suresi">Etkinlik Süresi:</label>
+    <input type="time" id="etkinlik_suresi" name="etkinlik_suresi" th:value="${event.etkinlik_suresi}" required>
+
+    <label for="aciklama">Açıklama:</label>
+    <textarea id="aciklama" name="aciklama" rows="4" required th:text="${event.aciklama}"></textarea>
+
+    <button type="submit" class="update-btn">Güncelle</button>
+    <button type="button" class="cancel-btn" onclick="closeModal()">İptal</button>
+  </form>
+</div>
+
+</body>
+</html>

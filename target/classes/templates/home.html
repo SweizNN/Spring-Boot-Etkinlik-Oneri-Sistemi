@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Sayfa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Doğa temalı arka plan */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #16a085;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 97%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            font-size: 22px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .header-left h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-section img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #ecf0f1;
+            object-fit: cover;
+        }
+
+
+        .profile-section img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .event-container-right {
+            position: fixed;
+            top: 150px;
+            left: 1550px;
+            width: 300px;
+            height: auto;
+            padding: 20px;
+            background-color: #2c3e50;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            z-index: 1000;
+            overflow-y: auto;
+            max-height: 80vh;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-container {
+            position: fixed;
+            top: 150px;
+            left: 50px;
+            width: 300px;
+            height: auto;
+            padding: 20px;
+            background-color: #2c3e50;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            z-index: 1000;
+            overflow-y: auto;
+            max-height: 80vh;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .event-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        .event-item {
+            background-color: #34495e;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .event-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-link {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ecf0f1;
+            transition: color 0.3s;
+        }
+
+        .event-link:hover {
+            color: #1abc9c;
+        }
+
+        .join-button {
+            background-color: #158100;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .join-button:hover {
+            background-color: #16a085;
+            transform: translateY(-3px);
+        }
+
+        .join-button:active {
+            transform: translateY(2px);
+        }
+
+        .event-add-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #158100;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 20px;
+            text-align: center;
+            width: 80%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .event-add-button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff5c5c;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background-color: #ff3b3b;
+        }
+
+        .kullanıcı-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #028102;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .kullanıcı-button:hover {
+            background-color: #024b02;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 100px;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 0 auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 70%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            transition: transform 0.3s ease;
+
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #333;
+        }
+
+        .modal.show {
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal.hide {
+            display: none;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .kullanıcı-button, .back-button {
+            padding: 15px 25px;
+            background-color: #2c3e50;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .kullanıcı-button:hover, .back-button:hover {
+            background-color: #16a085; /* Hover efektini ekledik */
+        }
+
+        .user-points {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ecf0f1;
+            background-color: #2c3e50;
+            padding: 5px 10px;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <h1>Hoşgeldiniz, <span th:text="${kullanıcı.kullanıcıAdı}"></span></h1>
+    </div>
+    <div class="profile-section">
+        <div class="user-points">
+            <span th:text="'Puan: ' + ${toplamPuan}"></span>
+        </div>
+        <img th:src="${kullanıcı.profil_fotografı != null ? kullanıcı.profil_fotografı : null}" alt="Profil Fotoğrafı" />
+
+    </div>
+
+</header>
+
+
+<div class="event-container">
+    <h2 class="event-title">Önerilen Etkinlikler</h2>
+    <ul class="event-list">
+        <li th:each="etkinlik : ${etkinlikler}">
+            <div class="event-item">
+                <a class="event-link" th:href="@{/home/event/{id}(id=${etkinlik.id})}" th:text="${etkinlik.etkinlik_adı}"></a>
+                <form class="join-form" th:action="@{/home/join/{etkinlikId}(etkinlikId=${etkinlik.id})}" method="post">
+                    <input type="hidden" name="etkinlik_id" th:value="${etkinlik.id}" />
+                    <button type="submit" class="join-button">Katıl</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+
+    <a href="/home/add-event" class="event-add-button">Etkinlik Ekle</a>
+
+    <div id="message" class="message" style="display: none;">
+        <p></p>
+    </div>
+    <div id="alternatif" class="message" style="display: none;">
+        <p></p>
+    </div>
+
+</div>
+
+
+<div class="event-container-right">
+    <h2 class="event-title">Katıldığınız Etkinlikler</h2>
+    <ul class="event-list">
+        <li th:each="etkinlik : ${katılınanEtkinlikler}">
+            <div class="event-item">
+                <a class="event-link" th:href="@{/home/event/{id}(id=${etkinlik.id})}" th:text="${etkinlik.etkinlik_adı}"></a>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p> Ayarlar </p>
+        <a href="/update-profile" class="kullanıcı-button">Kullanıcı Profili</a>
+        <a href="/login" class="back-button">Çıkış Yap</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var modal = $('#profileModal');
+        var span = $('.close');
+
+        // Profil fotoğrafına tıklama olayını dinle
+        $('.profile-section img').click(function() {
+           modal.removeClass('hide').addClass('show');  // Modalı göster
+        });
+
+        // Modal kapanma butonuna tıklama
+        span.click(function() {
+            modal.removeClass('show').addClass('hide');  // Modalı gizle
+
+        });
+
+
+        $(window).click(function(event) {
+            if ($(event.target).is(modal)) {
+                modal.removeClass('show').addClass('hide');
+            }
+
+        });
+
+        $('.join-form').submit(function(event) {
+            event.preventDefault();
+            var form = $(this);
+            var formData = form.serialize();
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    $('#message').show().find('p').text(response.message);
+                    if (response.alternatif) {
+                        $('#alternatif').show().find('p').text(response.alternatif);
+                    } else {
+                        $('#alternatif').hide();
+                    }
+                },
+                error: function() {
+                    $('#message').show().find('p').text('Bir hata oluştu. Lütfen tekrar deneyin.');
+                    $('#alternatif').hide();
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
